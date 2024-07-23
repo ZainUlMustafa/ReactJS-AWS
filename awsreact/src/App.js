@@ -5,6 +5,8 @@ import Login from './components/auth/Login';
 // import ForgotPassword from './components/ForgotPassword';
 // import Upload from './components/Upload';
 import Navbar from './components/navigation/Navbar';
+import Signup from './components/auth/SignUp';
+import Home from './components/home/Home';
 
 function App() {
   return (
@@ -14,10 +16,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/login" element={<Login/>} />
-          {/* <Route path="/signup" element={<SignUp />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/signup" element={<Signup />} />
+          {/* <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/upload" element={<Upload />} /> */}
-          <Route path="/" element={<h2>Welcome to the Cognito S3 App</h2>} />
+          <Route path="/" element={<Home/>} />
         </Routes>
       </div>
     </Router>
