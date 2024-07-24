@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getCurrentUser } from 'aws-amplify/auth';
+import { getCurrentUser, signOut } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
@@ -53,6 +53,14 @@ function Home() {
     return (
         <div className="home-container">
             <div className="home-content">
+                <button
+                    onClick={async () => {
+                        await signOut();
+                        navigate('/login');
+                    }}
+                >
+                    Sign out
+                </button>
                 <h1>Welcome, {user ? user.username : 'Loading...'}</h1>
                 <div className="upload-section">
                     <h2>Upload a File</h2>
