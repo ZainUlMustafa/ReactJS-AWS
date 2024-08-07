@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCurrentUser, signOut } from 'aws-amplify/auth';
+import { uploadData, list } from 'aws-amplify/storage';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
@@ -37,17 +38,40 @@ function Home() {
         setUploadError(null);
 
         try {
+            const result = await uploadData({
+                path: 'public/1.jpg',
+                // path: ({identityId}) => `protected/${identityId}/album/2024/1.jpg`,
+                data: file,
+                options: {
+                    onProgress, // Optional progress callback.
+                },
+            }).result;
             // const result = await Storage.put(file.name, file, {
             //     contentType: file.type,
             // });
-            // console.log('Upload result:', result);
-            // setUploadSuccess(true);
+            console.log('Upload result:', result);
+            setUploadSuccess(true);
         } catch (error) {
             console.error('Error uploading file:', error);
             setUploadError(error.message);
         } finally {
             setUploading(false);
         }
+    };
+
+    const listFiles = async () => {
+        try {
+            const result = await list({
+                path: '/',
+            });
+            console.log(result)
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const onProgress = (e) => {
+        console.log(e);
     };
 
     return (
@@ -60,6 +84,11 @@ function Home() {
                     }}
                 >
                     Sign out
+                </button>
+                <button
+                    onClick={listFiles}
+                >
+                    List files
                 </button>
                 <h1>Welcome, {user ? user.username : 'Loading...'}</h1>
                 <div className="upload-section">
